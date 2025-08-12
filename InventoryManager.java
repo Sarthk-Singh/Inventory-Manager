@@ -684,12 +684,12 @@ public class InventoryManager {
             JPanel cartControls = new JPanel(new FlowLayout(FlowLayout.RIGHT));
             JButton removeRowBtn = new JButton("Remove Selected");
             JButton clearCartBtn = new JButton("Clear Cart");
-            JButton soldBtn = new JButton("Sold");
+            JButton checkoutBtn = new JButton("Checkout");
             totalLabel = new JLabel("Total: ₹0.00");
             cartControls.add(totalLabel);
             cartControls.add(removeRowBtn);
             cartControls.add(clearCartBtn);
-            cartControls.add(soldBtn);
+            cartControls.add(checkoutBtn);
             cartPanel.add(cartControls, BorderLayout.SOUTH);
 
             centerSplit.setBottomComponent(cartPanel);
@@ -772,7 +772,7 @@ public class InventoryManager {
                 recalcCartTotal();
             });
 
-            soldBtn.addActionListener(e -> {
+            checkoutBtn.addActionListener(e -> {
                 if (cartModel.getRowCount() == 0) { JOptionPane.showMessageDialog(frame, "Cart empty."); return; }
                 // transactionally deduct
                 try (Connection conn = DBConnection.getConnection()) {

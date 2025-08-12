@@ -1,16 +1,18 @@
-# 📦 Inventory Management System (Java + PostgreSQL)
+# 📦 Inventory Management System — Admin & Client Panels (Java + PostgreSQL)
 
-This is a self-learning **mini project** built using **Java Swing** for the frontend and **PostgreSQL** as the backend database. It serves as a basic but functional desktop application to manage inventory for small-scale setups — like stores, labs, or internal use.
+A **Java Swing + PostgreSQL** desktop app for managing inventory with **separate Admin and Client interfaces**.  
+Built as a self-learning project, it now includes a **point-of-sale (POS)** style flow, with cart handling, stock deduction, and receipts.
 
 ---
 
 ## 🎯 Objective
 
-The goal of this project was to:
-- Explore **Java GUI development** with Swing.
-- Learn **database integration** using JDBC.
-- Understand CRUD operations in a real-world scenario.
-- Gain hands-on experience in building structured applications independently.
+This project started as a basic inventory tracker and evolved into a **mini retail management system**.  
+The goal was to:
+- Learn **Java Swing GUI** development in-depth.
+- Understand **multi-user workflows** (Admin vs Client).
+- Implement **database transactions** with PostgreSQL.
+- Create a realistic POS-like cart & checkout flow.
 
 ---
 
@@ -29,25 +31,33 @@ The goal of this project was to:
 
 ## 🔧 Features
 
-- ➕ **Add Items** — Add new inventory items with category, count, and price.
-- 🔁 **Smart Add** — If an item with the same name, category, *and* price exists, it increases its count instead of duplicating it.
-- 🔄 **Update Items** — Modify count and price of an existing item.
-- ➖ **Remove Items** — Reduce item count (only if enough stock exists).
-- 📊 **Show Inventory** — View all items in a scrollable table (`JTable`).
-- 🚪 **Exit Button** — Clean exit from the GUI.
+### 🛡️ **Admin Panel**
+- ➕ Add new items (category, stock count, price).
+- 🖊️ Update existing items directly in the table.
+- 🗑️ Remove items or adjust stock levels.
+- 📊 View and download the full inventory list with summary.
+
+### 🛍️ **Client Panel**
+- 🛒 Browse available stock.
+- 🔍 Search/filter items live by name or category.
+- 📥 Add items to cart with adjustable quantities.
+- ✏️ Update or remove cart items in real-time.
+- ✅ Checkout with **"Checkout"** button — deducts stock from DB.
+- 🧾 View and print-like a receipt of purchased items.
 
 ---
 
 ## ⚙️ Setup Instructions
 
-1. **Install PostgreSQL** and create a database named:
-   ```
-   InventoryManager
+1. **Install PostgreSQL** and create a database:
+   ```sql
+   CREATE DATABASE inventorymanager;
    ```
 
-2. **Create the table** using:
+2. **Create the table**:
    ```sql
    CREATE TABLE inventory (
+       item_id SERIAL PRIMARY KEY,
        item_name VARCHAR(100),
        item_category VARCHAR(100),
        item_count INT,
@@ -55,14 +65,15 @@ The goal of this project was to:
    );
    ```
 
-3. **Create a `config.properties` file** in the same directory with your database credentials:
-   ```
-   db.url=jdbc:postgresql://localhost:5432/InventoryManager
+3. **Create a `config.properties` file**:
+   ```properties
+   db.url=jdbc:postgresql://localhost:5432/inventorymanager
    db.user=your_username
    db.pass=your_password
    ```
 
-4. **Download the PostgreSQL JDBC driver** (`postgresql-42.7.3.jar`) and place it in a folder called `lib/` in your project directory.
+4. **Download PostgreSQL JDBC driver**  
+   Place `postgresql-42.7.3.jar` inside a `lib/` folder in your project.
 
 5. **Compile the project**:
    ```bash
@@ -73,12 +84,7 @@ The goal of this project was to:
    ```bash
    java -cp ".:lib/*" InventoryManager
    ```
-
-   > **Note for Windows users**: Replace `:` with `;` in the classpath:
-   ```bat
-   javac -cp ".;lib/*" DBConnection.java InventoryManager.java
-   java -cp ".;lib/*" InventoryManager
-   ```
+   > Windows users: replace `:` with `;` in the classpath.
 
 ---
 
@@ -86,9 +92,9 @@ The goal of this project was to:
 
 ```
 Inventory Management/
-├── InventoryManager.java       # Main GUI + logic
-├── DBConnection.java           # Reusable DB connector
-├── config.properties           # DB config file
+├── InventoryManager.java       # Main GUI + Admin/Client logic
+├── DBConnection.java           # Database connection helper
+├── config.properties           # Database credentials
 ├── lib/
 │   └── postgresql-42.7.3.jar   # JDBC driver
 └── README.md
@@ -96,22 +102,13 @@ Inventory Management/
 
 ---
 
-## 🤝 Acknowledgements
-
-- This project was not guided by a course or instructor.
-- It was built entirely through experimentation, debugging, and iteration.
-- ChatGPT was used as a coding assistant during the build.
-
----
-
 ## 🧪 Future Improvements
-
-- Add login/auth system
-- Export inventory to CSV
-- Sort/filter/search capabilities
-- Better UI (themes, layout)
+- 🔐 Separate login for admin and client with DB-stored credentials.
+- 🖨️ Print/export receipts.
+- 📦 Add stock import/export from CSV.
+- 🎨 Enhanced UI with JavaFX or modern themes.
 
 ---
 
-> Built with curiosity, caffeine, and Stack Overflow tabs 🧠☕💻  
-> — *Sarthak (aka Sam)*  
+> Built with curiosity, caffeine, and a dash of stubbornness 🚀  
+> — *Sarthak (Sam)*
